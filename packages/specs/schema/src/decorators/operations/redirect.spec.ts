@@ -10,7 +10,7 @@ describe("Redirect", () => {
       test() {}
     }
 
-    const spec = getSpec(MyController, {spec: SpecTypes.SWAGGER});
+    const spec = getSpec(MyController, {specType: SpecTypes.OPENAPI});
 
     expect(spec).to.deep.eq({
       paths: {
@@ -20,15 +20,21 @@ describe("Redirect", () => {
             parameters: [],
             responses: {
               "302": {
+                content: {
+                  "*/*": {
+                    schema: {
+                      type: "object"
+                    }
+                  }
+                },
                 description: "Found",
                 headers: {
                   Location: {
                     example: "/path/to",
-                    type: "string"
+                    schema: {
+                      type: "string"
+                    }
                   }
-                },
-                schema: {
-                  type: "object"
                 }
               }
             },
@@ -50,7 +56,7 @@ describe("Redirect", () => {
       test() {}
     }
 
-    const spec = getSpec(MyController, {spec: SpecTypes.SWAGGER});
+    const spec = getSpec(MyController, {specType: SpecTypes.OPENAPI});
 
     expect(spec).to.deep.eq({
       paths: {
@@ -60,15 +66,21 @@ describe("Redirect", () => {
             parameters: [],
             responses: {
               "301": {
+                content: {
+                  "*/*": {
+                    schema: {
+                      type: "object"
+                    }
+                  }
+                },
                 description: "Moved Permanently",
                 headers: {
                   Location: {
                     example: "/path/to",
-                    type: "string"
+                    schema: {
+                      type: "string"
+                    }
                   }
-                },
-                schema: {
-                  type: "object"
                 }
               }
             },
@@ -92,7 +104,7 @@ describe("Redirect", () => {
       test() {}
     }
 
-    const spec = getSpec(MyController, {spec: SpecTypes.SWAGGER});
+    const spec = getSpec(MyController, {specType: SpecTypes.OPENAPI});
 
     expect(spec).to.deep.eq({
       paths: {
@@ -102,16 +114,22 @@ describe("Redirect", () => {
             parameters: [],
             responses: {
               "301": {
+                content: {
+                  "*/*": {
+                    schema: {
+                      type: "object"
+                    }
+                  }
+                },
                 description: "Moved Permanently",
                 headers: {
                   Location: {
                     description: "Test description",
                     example: "/path/to",
-                    type: "string"
+                    schema: {
+                      type: "string"
+                    }
                   }
-                },
-                schema: {
-                  type: "object"
                 }
               }
             },

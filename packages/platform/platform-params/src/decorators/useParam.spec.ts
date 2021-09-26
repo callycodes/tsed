@@ -61,7 +61,9 @@ describe("@UseParam", () => {
                   in: "query",
                   name: "test",
                   required: false,
-                  type: "boolean"
+                  schema: {
+                    type: "boolean"
+                  }
                 }
               ],
               responses: {

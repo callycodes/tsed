@@ -44,8 +44,6 @@ export function createRef(name: string, schema: JsonSchema, options: JsonSchemaO
         return {
           oneOf: [{type: "null"}, ref]
         };
-      case SpecTypes.SWAGGER: // unsupported
-        break;
     }
   }
 

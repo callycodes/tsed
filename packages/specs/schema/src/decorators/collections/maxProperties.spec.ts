@@ -60,26 +60,22 @@ describe("@MaxProperties", () => {
 
     // THEN
     expect(getSpec(MyController)).to.deep.equal({
-      tags: [
-        {
-          name: "MyController"
-        }
-      ],
       paths: {
         "/": {
           post: {
             operationId: "myControllerMethod",
-            parameters: [
-              {
-                in: "body",
-                name: "body",
-                required: false,
-                schema: {
-                  maxProperties: 10,
-                  type: "object"
+            parameters: [],
+            requestBody: {
+              content: {
+                "application/json": {
+                  schema: {
+                    maxProperties: 10,
+                    type: "object"
+                  }
                 }
-              }
-            ],
+              },
+              required: false
+            },
             responses: {
               "200": {
                 description: "Success"
@@ -88,7 +84,12 @@ describe("@MaxProperties", () => {
             tags: ["MyController"]
           }
         }
-      }
+      },
+      tags: [
+        {
+          name: "MyController"
+        }
+      ]
     });
   });
   it("should throw an error when the given parameters is as negative integer", () => {

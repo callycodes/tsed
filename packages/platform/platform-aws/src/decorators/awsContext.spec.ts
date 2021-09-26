@@ -34,7 +34,9 @@ describe("AwsContext", () => {
                 in: "header",
                 name: "x-apigateway-context",
                 required: false,
-                type: "string"
+                schema: {
+                  type: "string"
+                }
               }
             ],
             responses: {

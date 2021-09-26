@@ -20,7 +20,6 @@ describe("Produces", () => {
           post: {
             operationId: "myControllerGet",
             parameters: [],
-            produces: ["text/json"],
             responses: {
               "200": {
                 description: "Success"
@@ -82,7 +81,6 @@ describe("Produces", () => {
           get: {
             operationId: "myControllerGet",
             parameters: [],
-            produces: ["text/json"],
             responses: {
               "200": {
                 description: "Success"
@@ -93,7 +91,6 @@ describe("Produces", () => {
           post: {
             operationId: "myControllerPost",
             parameters: [],
-            produces: ["text/json"],
             responses: {
               "200": {
                 description: "Success"

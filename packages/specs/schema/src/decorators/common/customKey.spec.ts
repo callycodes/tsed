@@ -24,7 +24,7 @@ describe("@CustomKey", () => {
     });
   });
 
-  it("should return the spec (OS2)", () => {
+  it("should return the spec (OS3)", () => {
     // WHEN
     class Model {
       @CustomKey("range", [1, 2])
@@ -42,14 +42,16 @@ describe("@CustomKey", () => {
     const spec = getSpec(MyController);
 
     expect(spec).to.deep.equal({
-      definitions: {
-        Model: {
-          properties: {
-            num: {
-              type: "number"
-            }
-          },
-          type: "object"
+      components: {
+        schemas: {
+          Model: {
+            properties: {
+              num: {
+                type: "number"
+              }
+            },
+            type: "object"
+          }
         }
       },
       paths: {
@@ -57,13 +59,16 @@ describe("@CustomKey", () => {
           get: {
             operationId: "myControllerGet",
             parameters: [],
-            produces: ["application/json"],
             responses: {
               "200": {
-                description: "Success",
-                schema: {
-                  $ref: "#/definitions/Model"
-                }
+                content: {
+                  "application/json": {
+                    schema: {
+                      $ref: "#/components/schemas/Model"
+                    }
+                  }
+                },
+                description: "Success"
               }
             },
             tags: ["MyController"]

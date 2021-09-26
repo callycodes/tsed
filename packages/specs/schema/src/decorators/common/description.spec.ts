@@ -88,7 +88,9 @@ describe("@Description", () => {
                 description: "Description",
                 in: "query",
                 required: false,
-                type: "string"
+                schema: {
+                  type: "string"
+                }
               }
             ],
             responses: {
@@ -116,36 +118,34 @@ describe("@Description", () => {
 
     // THEN
     expect(getSpec(MyController)).to.deep.equal({
-      definitions: {
-        MyModel: {
-          properties: {
-            id: {
-              type: "string"
-            }
-          },
-          type: "object"
+      components: {
+        schemas: {
+          MyModel: {
+            properties: {
+              id: {
+                type: "string"
+              }
+            },
+            type: "object"
+          }
         }
       },
-      tags: [
-        {
-          name: "MyController"
-        }
-      ],
       paths: {
         "/": {
           post: {
             operationId: "myControllerMethod",
-            parameters: [
-              {
-                in: "body",
-                name: "body",
-                required: false,
-                description: "Description",
-                schema: {
-                  $ref: "#/definitions/MyModel"
+            parameters: [],
+            requestBody: {
+              content: {
+                "application/json": {
+                  schema: {
+                    $ref: "#/components/schemas/MyModel"
+                  }
                 }
-              }
-            ],
+              },
+              description: "Description",
+              required: false
+            },
             responses: {
               "200": {
                 description: "Success"
@@ -154,7 +154,12 @@ describe("@Description", () => {
             tags: ["MyController"]
           }
         }
-      }
+      },
+      tags: [
+        {
+          name: "MyController"
+        }
+      ]
     });
   });
   it("should declare description on params (BODY - openapi3)", () => {

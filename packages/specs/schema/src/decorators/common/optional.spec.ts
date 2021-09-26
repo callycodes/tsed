@@ -20,7 +20,9 @@ describe("Optional", () => {
                 in: "query",
                 name: "q",
                 required: false,
-                type: "string"
+                schema: {
+                  type: "string"
+                }
               }
             ],
             responses: {

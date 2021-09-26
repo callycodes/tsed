@@ -34,7 +34,9 @@ describe("AwsEvent", () => {
                 in: "header",
                 name: "x-apigateway-event",
                 required: false,
-                type: "string"
+                schema: {
+                  type: "string"
+                }
               }
             ],
             responses: {

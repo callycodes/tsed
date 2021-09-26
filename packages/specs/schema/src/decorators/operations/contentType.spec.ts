@@ -16,11 +16,14 @@ describe("ContentType", () => {
           get: {
             operationId: "testTest",
             parameters: [],
-            produces: ["application/json"],
             responses: {
               "200": {
-                schema: {
-                  type: "object"
+                content: {
+                  "application/json": {
+                    schema: {
+                      type: "object"
+                    }
+                  }
                 }
               }
             },

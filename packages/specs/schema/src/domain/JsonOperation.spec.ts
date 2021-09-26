@@ -48,14 +48,17 @@ describe("JsonOperation", () => {
           "/": {
             get: {
               operationId: "myControllerMethod",
-              parameters: [
-                {
-                  in: "body",
-                  name: "body",
-                  required: false,
-                  type: "string"
-                }
-              ],
+              parameters: [],
+              requestBody: {
+                content: {
+                  "application/json": {
+                    schema: {
+                      type: "string"
+                    }
+                  }
+                },
+                required: false
+              },
               responses: {
                 "200": {
                   description: "Success"

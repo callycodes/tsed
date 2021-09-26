@@ -42,36 +42,6 @@ describe("@Example", () => {
     }
 
     // THEN
-    expect(getSpec(MyController, {specType: SpecTypes.SWAGGER})).to.deep.equal({
-      paths: {
-        "/{id}": {
-          get: {
-            operationId: "myControllerGetMethod",
-            parameters: [
-              {
-                description: "Mongoose ObjectId",
-                in: "path",
-                name: "id",
-                pattern: "^[0-9a-fA-F]{24}$",
-                required: true,
-                type: "string"
-              }
-            ],
-            responses: {
-              "200": {
-                description: "Success"
-              }
-            },
-            tags: ["MyController"]
-          }
-        }
-      },
-      tags: [
-        {
-          name: "MyController"
-        }
-      ]
-    });
     expect(getSpec(MyController, {specType: SpecTypes.OPENAPI})).to.deep.equal({
       paths: {
         "/{id}": {

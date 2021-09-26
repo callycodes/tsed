@@ -42,7 +42,6 @@ describe("@Name", () => {
       paths: {
         "/": {
           post: {
-            consumes: ["text/json"],
             operationId: "awesomeControllerGet",
             parameters: [],
             responses: {

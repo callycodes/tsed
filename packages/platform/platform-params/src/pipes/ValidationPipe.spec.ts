@@ -28,19 +28,20 @@ describe("ValidationPipe", () => {
         "/": {
           post: {
             operationId: "testTest",
-            parameters: [
-              {
-                in: "body",
-                name: "body",
-                required: false,
-                schema: {
-                  items: {
-                    type: "string"
-                  },
-                  type: "array"
+            parameters: [],
+            requestBody: {
+              content: {
+                "application/json": {
+                  schema: {
+                    items: {
+                      type: "string"
+                    },
+                    type: "array"
+                  }
                 }
-              }
-            ],
+              },
+              required: false
+            },
             responses: {
               "200": {
                 description: "Success"
@@ -81,14 +82,15 @@ describe("ValidationPipe", () => {
             operationId: "testTest",
             parameters: [
               {
-                collectionFormat: "multi",
                 in: "query",
-                items: {
-                  type: "string"
-                },
                 name: "test",
                 required: true,
-                type: "array"
+                schema: {
+                  items: {
+                    type: "string"
+                  },
+                  type: "array"
+                }
               }
             ],
             responses: {
@@ -132,14 +134,15 @@ describe("ValidationPipe", () => {
             operationId: "testTest",
             parameters: [
               {
-                collectionFormat: "multi",
                 in: "query",
-                items: {
-                  type: "string"
-                },
                 name: "test",
                 required: true,
-                type: "array"
+                schema: {
+                  items: {
+                    type: "string"
+                  },
+                  type: "array"
+                }
               }
             ],
             responses: {

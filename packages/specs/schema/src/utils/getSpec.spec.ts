@@ -16,7 +16,7 @@ describe("getSpec()", () => {
 
         // THEN
         const spec = getSpec(Controller, {
-          specType: SpecTypes.SWAGGER
+          specType: SpecTypes.OPENAPI
         });
         expect(await validateSpec(spec)).to.eq(true);
       });
@@ -28,7 +28,7 @@ describe("getSpec()", () => {
         }
 
         // THEN
-        const spec = getSpec(Controller, {specType: SpecTypes.SWAGGER});
+        const spec = getSpec(Controller, {specType: SpecTypes.OPENAPI});
 
         expect(await validateSpec(spec)).to.eq(true);
         expect(spec).to.deep.equal({
@@ -58,7 +58,9 @@ describe("getSpec()", () => {
                     in: "path",
                     name: "id",
                     required: true,
-                    type: "string"
+                    schema: {
+                      type: "string"
+                    }
                   }
                 ],
                 responses: {
@@ -80,7 +82,7 @@ describe("getSpec()", () => {
         }
 
         // THEN
-        const spec = getSpec(Controller, {specType: SpecTypes.SWAGGER});
+        const spec = getSpec(Controller, {specType: SpecTypes.OPENAPI});
 
         expect(await validateSpec(spec)).to.eq(true);
         expect(spec).to.deep.equal({
@@ -111,7 +113,9 @@ describe("getSpec()", () => {
                     in: "path",
                     name: "id",
                     required: true,
-                    type: "string"
+                    schema: {
+                      type: "string"
+                    }
                   }
                 ],
                 responses: {
@@ -175,7 +179,7 @@ describe("getSpec()", () => {
         }
 
         // THEN
-        const spec = getSpec(Controller, {specType: SpecTypes.SWAGGER});
+        const spec = getSpec(Controller, {specType: SpecTypes.OPENAPI});
 
         expect(spec).to.deep.equal({
           tags: [
@@ -193,13 +197,17 @@ describe("getSpec()", () => {
                     in: "path",
                     name: "id",
                     required: true,
-                    type: "string"
+                    schema: {
+                      type: "string"
+                    }
                   },
                   {
                     in: "query",
                     name: "basic",
                     required: false,
-                    type: "string"
+                    schema: {
+                      type: "string"
+                    }
                   }
                 ],
                 responses: {
@@ -228,7 +236,7 @@ describe("getSpec()", () => {
         }
 
         // THEN
-        const spec = getSpec(Controller, {specType: SpecTypes.SWAGGER});
+        const spec = getSpec(Controller, {specType: SpecTypes.OPENAPI});
 
         expect(spec).to.deep.equal({
           tags: [
@@ -246,19 +254,25 @@ describe("getSpec()", () => {
                     in: "path",
                     name: "id",
                     required: true,
-                    type: "string"
+                    schema: {
+                      type: "string"
+                    }
                   },
                   {
                     in: "query",
                     name: "id",
                     required: false,
-                    type: "string"
+                    schema: {
+                      type: "string"
+                    }
                   },
                   {
                     in: "query",
                     name: "name",
                     required: false,
-                    type: "string"
+                    schema: {
+                      type: "string"
+                    }
                   }
                 ],
                 responses: {
@@ -314,7 +328,7 @@ describe("getSpec()", () => {
         }
 
         // THEN
-        const spec = getSpec(Controller, {specType: SpecTypes.SWAGGER});
+        const spec = getSpec(Controller, {specType: SpecTypes.OPENAPI});
 
         expect(spec).to.deep.equal({
           tags: [
@@ -332,17 +346,20 @@ describe("getSpec()", () => {
                     in: "path",
                     name: "id",
                     required: true,
-                    type: "string"
+                    schema: {
+                      type: "string"
+                    }
                   },
                   {
-                    collectionFormat: "multi",
                     in: "query",
-                    items: {
-                      type: "string"
-                    },
                     name: "basic",
                     required: false,
-                    type: "array"
+                    schema: {
+                      items: {
+                        type: "object"
+                      },
+                      type: "array"
+                    }
                   }
                 ],
                 responses: {
@@ -413,33 +430,31 @@ describe("getSpec()", () => {
         }
 
         // THEN
-        const spec = getSpec(Controller, {specType: SpecTypes.SWAGGER});
+        const spec = getSpec(Controller, {specType: SpecTypes.OPENAPI});
 
         expect(spec).to.deep.equal({
-          tags: [
-            {
-              name: "Controller"
-            }
-          ],
           paths: {
             "/{id}": {
               get: {
                 operationId: "controllerMethod",
-                tags: ["Controller"],
                 parameters: [
                   {
                     in: "path",
                     name: "id",
                     required: true,
-                    type: "string"
+                    schema: {
+                      type: "string"
+                    }
                   },
                   {
                     in: "query",
                     name: "basic",
                     required: false,
-                    type: "object",
-                    additionalProperties: {
-                      type: "string"
+                    schema: {
+                      additionalProperties: {
+                        type: "string"
+                      },
+                      type: "object"
                     }
                   }
                 ],
@@ -447,10 +462,16 @@ describe("getSpec()", () => {
                   "200": {
                     description: "Success"
                   }
-                }
+                },
+                tags: ["Controller"]
               }
             }
-          }
+          },
+          tags: [
+            {
+              name: "Controller"
+            }
+          ]
         });
       });
       it("should declare all schema correctly (query -  openspec3 - Map)", async () => {
@@ -518,39 +539,36 @@ describe("getSpec()", () => {
         }
 
         // THEN
-        const spec = getSpec(Controller, {specType: SpecTypes.SWAGGER});
+        const spec = getSpec(Controller, {specType: SpecTypes.OPENAPI});
 
         expect(spec).to.deep.equal({
-          definitions: {
-            MyModel: {
-              type: "object",
-              properties: {
-                prop: {
-                  type: "string"
-                }
+          components: {
+            schemas: {
+              MyModel: {
+                properties: {
+                  prop: {
+                    type: "string"
+                  }
+                },
+                type: "object"
               }
             }
           },
-          tags: [
-            {
-              name: "Controller"
-            }
-          ],
           paths: {
             "/": {
               post: {
                 operationId: "controllerMethod",
-                consumes: ["application/json"],
-                parameters: [
-                  {
-                    in: "body",
-                    name: "body",
-                    required: true,
-                    schema: {
-                      $ref: "#/definitions/MyModel"
+                parameters: [],
+                requestBody: {
+                  content: {
+                    "application/json": {
+                      schema: {
+                        $ref: "#/components/schemas/MyModel"
+                      }
                     }
-                  }
-                ],
+                  },
+                  required: true
+                },
                 responses: {
                   "200": {
                     description: "Success"
@@ -559,7 +577,12 @@ describe("getSpec()", () => {
                 tags: ["Controller"]
               }
             }
-          }
+          },
+          tags: [
+            {
+              name: "Controller"
+            }
+          ]
         });
       });
       it("should declare all schema correctly (model -  openspec3)", async () => {
@@ -636,41 +659,39 @@ describe("getSpec()", () => {
         }
 
         // THEN
-        const spec = getSpec(Controller, {specType: SpecTypes.SWAGGER});
+        const spec = getSpec(Controller, {specType: SpecTypes.OPENAPI});
 
         expect(spec).to.deep.equal({
-          definitions: {
-            Product: {
-              properties: {
-                title: {
-                  type: "string"
-                }
-              },
-              type: "object"
+          components: {
+            schemas: {
+              Product: {
+                properties: {
+                  title: {
+                    type: "string"
+                  }
+                },
+                type: "object"
+              }
             }
           },
-          tags: [
-            {
-              name: "Controller"
-            }
-          ],
           paths: {
             "/": {
               post: {
                 operationId: "controllerMethod",
-                parameters: [
-                  {
-                    in: "body",
-                    name: "body",
-                    required: false,
-                    schema: {
-                      type: "array",
-                      items: {
-                        $ref: "#/definitions/Product"
+                parameters: [],
+                requestBody: {
+                  content: {
+                    "application/json": {
+                      schema: {
+                        items: {
+                          $ref: "#/components/schemas/Product"
+                        },
+                        type: "array"
                       }
                     }
-                  }
-                ],
+                  },
+                  required: false
+                },
                 responses: {
                   "200": {
                     description: "Success"
@@ -679,7 +700,12 @@ describe("getSpec()", () => {
                 tags: ["Controller"]
               }
             }
-          }
+          },
+          tags: [
+            {
+              name: "Controller"
+            }
+          ]
         });
       });
       it("should declare all schema correctly (Map - model - swagger2)", async () => {
@@ -697,50 +723,53 @@ describe("getSpec()", () => {
         }
 
         // THEN
-        const spec = getSpec(Controller, {specType: SpecTypes.SWAGGER});
+        const spec = getSpec(Controller, {specType: SpecTypes.OPENAPI});
 
         expect(spec).to.deep.equal({
-          definitions: {
-            Product: {
-              properties: {
-                title: {
-                  type: "string"
-                }
-              },
-              type: "object"
+          components: {
+            schemas: {
+              Product: {
+                properties: {
+                  title: {
+                    type: "string"
+                  }
+                },
+                type: "object"
+              }
+            }
+          },
+          paths: {
+            "/": {
+              post: {
+                operationId: "controllerMethod",
+                parameters: [],
+                requestBody: {
+                  content: {
+                    "application/json": {
+                      schema: {
+                        additionalProperties: {
+                          $ref: "#/components/schemas/Product"
+                        },
+                        type: "object"
+                      }
+                    }
+                  },
+                  required: false
+                },
+                responses: {
+                  "200": {
+                    description: "Success"
+                  }
+                },
+                tags: ["Controller"]
+              }
             }
           },
           tags: [
             {
               name: "Controller"
             }
-          ],
-          paths: {
-            "/": {
-              post: {
-                operationId: "controllerMethod",
-                parameters: [
-                  {
-                    in: "body",
-                    name: "body",
-                    required: false,
-                    schema: {
-                      additionalProperties: {
-                        $ref: "#/definitions/Product"
-                      },
-                      type: "object"
-                    }
-                  }
-                ],
-                tags: ["Controller"],
-                responses: {
-                  "200": {
-                    description: "Success"
-                  }
-                }
-              }
-            }
-          }
+          ]
         });
       });
       it("should declare all schema correctly (inline - swagger2)", async () => {
@@ -751,49 +780,49 @@ describe("getSpec()", () => {
         }
 
         // THEN
-        const spec = getSpec(Controller, {specType: SpecTypes.SWAGGER});
+        const spec = getSpec(Controller, {specType: SpecTypes.OPENAPI});
 
         expect(spec).to.deep.equal({
-          tags: [
-            {
-              name: "Controller"
-            }
-          ],
           paths: {
             "/": {
               post: {
-                consumes: ["application/json"],
                 operationId: "controllerMethod",
-                tags: ["Controller"],
-                parameters: [
-                  {
-                    in: "body",
-                    name: "body",
-                    required: true,
-                    schema: {
-                      properties: {
-                        num: {
-                          minimum: 0,
-                          type: "number"
+                parameters: [],
+                requestBody: {
+                  content: {
+                    "application/json": {
+                      schema: {
+                        properties: {
+                          num: {
+                            minimum: 0,
+                            type: "number"
+                          },
+                          test: {
+                            minimum: 0,
+                            type: "number"
+                          }
                         },
-                        test: {
-                          minimum: 0,
-                          type: "number"
-                        }
-                      },
-                      required: ["num", "test"],
-                      type: "object"
+                        required: ["num", "test"],
+                        type: "object"
+                      }
                     }
-                  }
-                ],
+                  },
+                  required: true
+                },
                 responses: {
                   "200": {
                     description: "Success"
                   }
-                }
+                },
+                tags: ["Controller"]
               }
             }
-          }
+          },
+          tags: [
+            {
+              name: "Controller"
+            }
+          ]
         });
       });
       it("should declare all schema correctly (Array - inline - OS3)", async () => {
@@ -914,52 +943,52 @@ describe("getSpec()", () => {
         }
 
         // THEN
-        const spec = getSpec(Controller, {specType: SpecTypes.SWAGGER});
+        const spec = getSpec(Controller, {specType: SpecTypes.OPENAPI});
         expect(await validateSpec(spec)).to.eq(true);
         expect(spec).to.deep.equal({
-          tags: [
-            {
-              name: "Controller"
-            }
-          ],
           paths: {
             "/": {
               post: {
-                consumes: ["application/json"],
                 operationId: "controllerMethod",
-                tags: ["Controller"],
-                parameters: [
-                  {
-                    in: "body",
-                    name: "body",
-                    required: true,
-                    schema: {
-                      properties: {
-                        num: {
-                          type: "array",
-                          items: {
+                parameters: [],
+                requestBody: {
+                  content: {
+                    "application/json": {
+                      schema: {
+                        properties: {
+                          num: {
+                            items: {
+                              minimum: 0,
+                              type: "number"
+                            },
+                            type: "array"
+                          },
+                          test: {
                             minimum: 0,
                             type: "number"
                           }
                         },
-                        test: {
-                          minimum: 0,
-                          type: "number"
-                        }
-                      },
-                      required: ["num", "test"],
-                      type: "object"
+                        required: ["num", "test"],
+                        type: "object"
+                      }
                     }
-                  }
-                ],
+                  },
+                  required: true
+                },
                 responses: {
                   "200": {
                     description: "Success"
                   }
-                }
+                },
+                tags: ["Controller"]
               }
             }
-          }
+          },
+          tags: [
+            {
+              name: "Controller"
+            }
+          ]
         });
       });
       it("should declare all schema correctly (inline -  openspec3)", async () => {
@@ -1079,32 +1108,36 @@ describe("getSpec()", () => {
       }
 
       // THEN
-      const spec = getSpec(Controller, {specType: SpecTypes.SWAGGER});
+      const spec = getSpec(Controller, {specType: SpecTypes.OPENAPI});
 
       expect(spec).to.deep.equal({
-        tags: [
-          {
-            name: "AliasController",
-            description: "Class description"
-          }
-        ],
         paths: {
           "/": {
             post: {
               operationId: "aliasControllerMethod",
               parameters: [],
-              tags: ["AliasController"],
               responses: {
                 "200": {
-                  description: "description",
-                  schema: {
-                    type: "string"
-                  }
+                  content: {
+                    "*/*": {
+                      schema: {
+                        type: "string"
+                      }
+                    }
+                  },
+                  description: "description"
                 }
-              }
+              },
+              tags: ["AliasController"]
             }
           }
-        }
+        },
+        tags: [
+          {
+            description: "Class description",
+            name: "AliasController"
+          }
+        ]
       });
     });
     it("should declare all schema correctly (openspec3)", async () => {
@@ -1156,35 +1189,38 @@ describe("getSpec()", () => {
       }
 
       // THEN
-      const spec = getSpec(Controller, {specType: SpecTypes.SWAGGER});
+      const spec = getSpec(Controller, {specType: SpecTypes.OPENAPI});
 
       expect(spec).to.deep.equal({
-        tags: [
-          {
-            name: "Controller"
-          }
-        ],
         paths: {
           "/": {
             post: {
               operationId: "controllerMethod",
               parameters: [],
-              produces: ["application/json"],
-              tags: ["Controller"],
               responses: {
                 "200": {
-                  description: "description",
-                  schema: {
-                    items: {
-                      type: "string"
-                    },
-                    type: "array"
-                  }
+                  content: {
+                    "application/json": {
+                      schema: {
+                        items: {
+                          type: "string"
+                        },
+                        type: "array"
+                      }
+                    }
+                  },
+                  description: "description"
                 }
-              }
+              },
+              tags: ["Controller"]
             }
           }
-        }
+        },
+        tags: [
+          {
+            name: "Controller"
+          }
+        ]
       });
     });
     it("should declare an Array of string (openspec3)", async () => {

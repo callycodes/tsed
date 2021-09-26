@@ -75,7 +75,9 @@ export function testCtrlInheritance(options: PlatformTestOptions) {
                 in: "query",
                 name: "search",
                 required: false,
-                type: "string"
+                schema: {
+                  type: "string"
+                }
               }
             ],
             responses: {
@@ -94,7 +96,9 @@ export function testCtrlInheritance(options: PlatformTestOptions) {
                 in: "query",
                 name: "s",
                 required: false,
-                type: "string"
+                schema: {
+                  type: "string"
+                }
               }
             ],
             responses: {
@@ -113,7 +117,9 @@ export function testCtrlInheritance(options: PlatformTestOptions) {
                 in: "path",
                 name: "id",
                 required: true,
-                type: "string"
+                schema: {
+                  type: "string"
+                }
               }
             ],
             responses: {

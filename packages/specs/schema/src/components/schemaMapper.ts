@@ -10,13 +10,11 @@ import {mapNullableType} from "../utils/mapNullableType";
 /**
  * @ignore
  */
-const IGNORES = ["name", "$required", "$hooks", "_nestedGenerics", SpecTypes.OPENAPI, SpecTypes.SWAGGER, SpecTypes.JSON];
+const IGNORES = ["name", "$required", "$hooks", "_nestedGenerics", SpecTypes.OPENAPI, SpecTypes.JSON];
 /**
  * @ignore
  */
 const IGNORES_OPENSPEC = ["const"];
-const IGNORES_OS2 = ["writeOnly", "readOnly"];
-
 /**
  * @ignore
  */
@@ -38,7 +36,6 @@ function shouldSkipKey(key: string, {specType = SpecTypes.JSON, customKeys = fal
   return (
     IGNORES.includes(key) ||
     (key.startsWith("#") && (customKeys === false || specType !== SpecTypes.JSON)) ||
-    (specType === SpecTypes.SWAGGER && IGNORES_OS2.includes(key)) ||
     (specType !== SpecTypes.JSON && IGNORES_OPENSPEC.includes(key))
   );
 }
@@ -57,7 +54,7 @@ export function schemaMapper(schema: JsonSchema, options: JsonSchemaOptions = {}
       value = schema.getJsonType();
     }
 
-    if (key === "examples" && isObject(value) && [SpecTypes.OPENAPI, SpecTypes.SWAGGER].includes(options.specType!)) {
+    if (key === "examples" && isObject(value) && SpecTypes.OPENAPI === options.specType) {
       key = "example";
       value = Object.values(value)[0];
     }

@@ -1,11 +1,11 @@
-import {OpenSpec2, OpenSpec3} from "@tsed/openspec";
+import {OpenSpec3} from "@tsed/openspec";
 import {expect} from "chai";
 import {mergeSpec} from "./mergeSpec";
 
 describe("mergeSpec", () => {
   describe("security", () => {
     it("should merge spec", () => {
-      const spec1: OpenSpec2 = {
+      const spec1 = {
         swagger: "2.0",
         paths: {
           "/get": {
@@ -25,7 +25,7 @@ describe("mergeSpec", () => {
         }
       };
 
-      const spec2: OpenSpec2 = {
+      const spec2 = {
         swagger: "2.0",
         paths: {
           "/get": {
@@ -70,7 +70,7 @@ describe("mergeSpec", () => {
   });
   describe("allOf", () => {
     it("should merge spec by type", () => {
-      const spec1: OpenSpec2 = {
+      const spec1: any = {
         swagger: "2.0",
         paths: {
           "/get": {
@@ -101,7 +101,7 @@ describe("mergeSpec", () => {
         }
       };
 
-      const spec2: OpenSpec2 = {
+      const spec2: any = {
         swagger: "2.0",
         paths: {
           "/get": {
@@ -172,7 +172,7 @@ describe("mergeSpec", () => {
       });
     });
     it("should merge spec by $ref", () => {
-      const spec1: OpenSpec2 = {
+      const spec1 = {
         swagger: "2.0",
         paths: {
           "/get": {
@@ -202,7 +202,7 @@ describe("mergeSpec", () => {
           }
         }
       };
-      const spec2: OpenSpec2 = {
+      const spec2: any = {
         swagger: "2.0",
         paths: {
           "/get": {

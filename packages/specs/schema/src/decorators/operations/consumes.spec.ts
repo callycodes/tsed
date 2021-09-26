@@ -2,36 +2,6 @@ import {Consumes, getSpec, OperationPath, SpecTypes} from "@tsed/schema";
 import {expect} from "chai";
 
 describe("Consumes", () => {
-  it("should store metadata (swagger)", () => {
-    class MyController {
-      @OperationPath("POST", "/")
-      @Consumes("text/json")
-      get() {}
-    }
-
-    expect(getSpec(MyController)).to.deep.eq({
-      tags: [
-        {
-          name: "MyController"
-        }
-      ],
-      paths: {
-        "/": {
-          post: {
-            operationId: "myControllerGet",
-            parameters: [],
-            consumes: ["text/json"],
-            responses: {
-              "200": {
-                description: "Success"
-              }
-            },
-            tags: ["MyController"]
-          }
-        }
-      }
-    });
-  });
   it("should store metadata (openspec)", () => {
     class MyController {
       @OperationPath("POST", "/")
@@ -82,7 +52,6 @@ describe("Consumes", () => {
           get: {
             operationId: "myControllerGet",
             parameters: [],
-            consumes: ["text/json"],
             responses: {
               "200": {
                 description: "Success"
@@ -93,7 +62,6 @@ describe("Consumes", () => {
           post: {
             operationId: "myControllerPost",
             parameters: [],
-            consumes: ["text/json"],
             responses: {
               "200": {
                 description: "Success"

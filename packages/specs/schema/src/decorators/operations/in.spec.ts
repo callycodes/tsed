@@ -10,13 +10,13 @@ describe("In", () => {
 
     // THEN
     getSpec(Controller, {
-      specType: SpecTypes.SWAGGER
+      specType: SpecTypes.OPENAPI
     });
 
     const paramSchema = JsonEntityStore.from(Controller, "method", 0);
     const methodSchema = paramSchema.parent;
     const operation = methodSchema.operation!.toJSON({
-      specType: SpecTypes.SWAGGER
+      specType: SpecTypes.OPENAPI
     });
 
     expect(operation).to.deep.equal({
@@ -25,7 +25,9 @@ describe("In", () => {
           in: "path",
           name: "basic",
           required: true,
-          type: "string"
+          schema: {
+            type: "string"
+          }
         }
       ],
       responses: {
@@ -44,13 +46,13 @@ describe("In", () => {
 
     // THEN
     getSpec(Controller, {
-      specType: SpecTypes.SWAGGER
+      specType: SpecTypes.OPENAPI
     });
 
     const paramSchema = JsonEntityStore.from(Controller, "method", 0);
     const methodSchema = paramSchema.parent;
     const operation = methodSchema.operation!.toJSON({
-      specType: SpecTypes.SWAGGER
+      specType: SpecTypes.OPENAPI
     });
 
     expect(operation).to.deep.equal({
@@ -59,13 +61,17 @@ describe("In", () => {
           in: "path",
           name: "basic",
           required: true,
-          type: "string"
+          schema: {
+            type: "string"
+          }
         },
         {
           in: "header",
           name: "Authorization",
           required: true,
-          type: "string",
+          schema: {
+            type: "string"
+          },
           description: "description"
         }
       ],
@@ -85,13 +91,13 @@ describe("In", () => {
 
     // THEN
     getSpec(Controller, {
-      specType: SpecTypes.SWAGGER
+      specType: SpecTypes.OPENAPI
     });
 
     const paramSchema = JsonEntityStore.from(Controller, "method", 0);
     const methodSchema = paramSchema.parent;
     const operation = methodSchema.operation!.toJSON({
-      specType: SpecTypes.SWAGGER
+      specType: SpecTypes.OPENAPI
     });
 
     expect(operation).to.deep.equal({
@@ -100,13 +106,17 @@ describe("In", () => {
           in: "path",
           name: "basic",
           required: true,
-          type: "string"
+          schema: {
+            type: "string"
+          }
         },
         {
           in: "header",
           name: "Authorization",
           required: true,
-          type: "string",
+          schema: {
+            type: "string"
+          },
           description: "description"
         }
       ],

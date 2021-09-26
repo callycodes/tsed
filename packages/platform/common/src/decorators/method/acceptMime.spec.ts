@@ -19,7 +19,6 @@ describe("AcceptMime", () => {
       paths: {
         "/": {
           get: {
-            produces: ["application/json"],
             operationId: "testTest",
             parameters: [],
             responses: {

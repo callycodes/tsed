@@ -92,117 +92,141 @@ describe("Swagger integration", () => {
         }
       ]);
       expect(response.body).to.deep.eq({
-        consumes: ["application/json"],
-        definitions: {
-          Calendar: {
-            properties: {
-              id: {
-                type: "string"
+        "components": {
+          "schemas": {
+            "Calendar": {
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "name": {
+                  "minLength": 1,
+                  "type": "string"
+                }
               },
-              name: {
-                minLength: 1,
-                type: "string"
-              }
-            },
-            required: ["name"],
-            type: "object"
+              "required": [
+                "name"
+              ],
+              "type": "object"
+            }
           }
         },
-        info: {
-          title: "Swagger title",
-          version: "1.2.0"
+        "info": {
+          "title": "Swagger title",
+          "version": "1.2.0"
         },
-        paths: {
+        "openapi": "3.0.1",
+        "paths": {
           "/rest/calendars": {
-            get: {
-              operationId: "calendarsControllerGetAll",
-              parameters: [],
-              produces: ["application/json"],
-              responses: {
+            "get": {
+              "operationId": "calendarsControllerGetAll",
+              "parameters": [],
+              "responses": {
                 "200": {
-                  description: "Success",
-                  schema: {
-                    items: {
-                      $ref: "#/definitions/Calendar"
-                    },
-                    type: "array"
-                  }
+                  "content": {
+                    "application/json": {
+                      "schema": {
+                        "items": {
+                          "$ref": "#/components/schemas/Calendar"
+                        },
+                        "type": "array"
+                      }
+                    }
+                  },
+                  "description": "Success"
                 }
               },
-              tags: ["CalendarsController"]
-            }
-          },
-          "/rest/calendars/{id}": {
-            get: {
-              operationId: "calendarsControllerGet",
-              parameters: [
-                {
-                  description: "Mongoose ObjectId",
-                  in: "path",
-                  name: "id",
-                  pattern: "^[0-9a-fA-F]{24}$",
-                  required: true,
-                  type: "string"
-                }
-              ],
-              produces: ["application/json"],
-              responses: {
-                "200": {
-                  description: "Success",
-                  schema: {
-                    $ref: "#/definitions/Calendar"
-                  }
-                }
-              },
-              tags: ["CalendarsController"]
+              "tags": [
+                "CalendarsController"
+              ]
             }
           },
           "/rest/calendars/csv": {
-            post: {
-              operationId: "calendarsControllerCsv",
-              parameters: [
-                {
-                  in: "body",
-                  name: "body",
-                  required: false,
-                  type: "string"
-                }
-              ],
-              produces: ["text/plain"],
-              consumes: ["text/plain"],
-              responses: {
-                "200": {
-                  description: "Success",
-                  schema: {
-                    type: "string"
+            "post": {
+              "operationId": "calendarsControllerCsv",
+              "parameters": [],
+              "requestBody": {
+                "content": {
+                  "text/plain": {
+                    "schema": {
+                      "type": "string"
+                    }
                   }
+                },
+                "required": false
+              },
+              "responses": {
+                "200": {
+                  "content": {
+                    "text/plain": {
+                      "schema": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "description": "Success"
                 }
               },
-              tags: ["CalendarsController"]
+              "tags": [
+                "CalendarsController"
+              ]
             }
           },
           "/rest/calendars/events": {
-            get: {
-              description: "Events",
-              operationId: "eventCtrlGet",
-              parameters: [],
-              responses: {
+            "get": {
+              "description": "Events",
+              "operationId": "eventCtrlGet",
+              "parameters": [],
+              "responses": {
                 "200": {
-                  description: "Success"
+                  "description": "Success"
                 }
               },
-              tags: ["EventCtrl"]
+              "tags": [
+                "EventCtrl"
+              ]
+            }
+          },
+          "/rest/calendars/{id}": {
+            "get": {
+              "operationId": "calendarsControllerGet",
+              "parameters": [
+                {
+                  "description": "Mongoose ObjectId",
+                  "in": "path",
+                  "name": "id",
+                  "required": true,
+                  "schema": {
+                    "example": "5ce7ad3028890bd71749d477",
+                    "pattern": "^[0-9a-fA-F]{24}$",
+                    "type": "string"
+                  }
+                }
+              ],
+              "responses": {
+                "200": {
+                  "content": {
+                    "application/json": {
+                      "schema": {
+                        "$ref": "#/components/schemas/Calendar"
+                      }
+                    }
+                  },
+                  "description": "Success"
+                }
+              },
+              "tags": [
+                "CalendarsController"
+              ]
             }
           }
         },
-        produces: ["application/json"],
-        swagger: "2.0",
-        tags: [
+        "tags": [
           {
-            name: "EventCtrl"
+            "name": "EventCtrl"
           },
           {
-            name: "CalendarsController"
+            "name": "CalendarsController"
           }
         ]
       });
